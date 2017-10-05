@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:JsonFileExample" 
+    xmlns:viewModel = "clr-namespace:JsonFileExample.ViewModels"
+    x:Class="JsonFileExample.JsonFileExamplePage">
+    
+    <ScrollView
+        Margin = "10,0,10,0">
+        <Label
+            Text = "Settings Page"
+            TextColor = "Black"
+            FontSize = "20"
+            FontAttributes = "Bold"
+            HorizontalTextAlignment = "Center"
+            VerticalOptions = "StartAndExpand"
+            HorizontalOptions = "CenterAndExpand" />
+        
+    	<Grid>
+            <Grid.BindingContext>
+                <viewModel:ExampleVM />
+            </Grid.BindingContext>
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "Auto"/>
+                <RowDefinition Height = "Auto"/>
+                <RowDefinition Height = "Auto"/>
+                <RowDefinition Height = "Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Text = "Version #"
+                Grid.Row = "0"
+                Grid.Column = "0"
+                HorizontalTextAlignment = "Start" />
+
+            <Entry
+                Text = "{Binding Version}"
+                HorizontalTextAlignment = "End"
+                Grid.Row = "0"
+                Grid.Column = "1" />
+
+            <Label
+                Text = "ServiceURL"
+                Grid.Row = "1"
+                Grid.Column = "0"
+                HorizontalTextAlignment = "Start" />
+
+            <Entry
+                Text = "{Binding ServiceURL}"
+                HorizontalTextAlignment = "End"
+                Grid.Row = "1"
+                Grid.Column = "1" />
+
+            <Label
+                Text = "PhoneNumber"
+                Grid.Row = "2"
+                Grid.Column = "0"
+                HorizontalTextAlignment = "Start" />
+
+            <Entry
+                Text = "{Binding PhoneNumber}"
+                HorizontalTextAlignment = "End"
+                Grid.Row = "2"
+                Grid.Column = "1" />
+
+            <Label
+                Text = "About"
+                Grid.Row = "3"
+                Grid.Column = "0"
+                HorizontalTextAlignment = "Start" />
+
+            <Entry
+                Text = "{Binding About}"
+                HorizontalTextAlignment = "End"
+                Grid.Row = "3"
+                Grid.Column = "1" />
+
+            <Button
+                Text = "Save"
+                TextColor = "White"
+                BackgroundColor = "Gray"
+                FontSize = "20"
+                FontAttributes = "Bold"
+                VerticalOptions = "EndAndExpand"
+                HorizontalOptions = "CenterAndExpand"
+                Clicked = "Handle_Clicked"
+                Command = "{Binding SaveCommand}"
+                Grid.Row = "4"
+                Grid.Column = "0"
+                Grid.ColumnSpan = "2" />
+            
+        </Grid>
+    </ScrollView>
+</ContentPage>
