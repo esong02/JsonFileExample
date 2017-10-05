@@ -30,6 +30,7 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="JsonFileExamplePage.xaml" />
+    <EmbeddedResource Include="Settings.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

@@ -11,6 +11,22 @@ namespace JsonFileExample.Droid
 {
     public class SaveAndLoad : ISaveAndLoad
     {
+        public bool FindFile(string filename)
+        {
+            try{
+
+				var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				var filePath = Path.Combine(documentsPath, filename);
+				var file = System.IO.File.ReadAllText(filePath);
+
+            }catch(FileNotFoundException e){
+                System.Diagnostics.Debug.Write("Error: " + e.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
         public string LoadText(string filename)
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);

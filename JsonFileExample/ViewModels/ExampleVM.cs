@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Reflection;
 
 using Xamarin.Forms;
 
@@ -18,8 +20,9 @@ namespace JsonFileExample.ViewModels
         public string serviceurl;
         public int phonenumber;
         public string about;
-        Settings settings;
-        string fileName = "Sample.json";
+        Settings settings = new Settings();
+        string fileName = "Settings1.json";
+        string resourceName = "JsonFileExample.Settings.json";
 
         public double Version
         {
@@ -95,44 +98,50 @@ namespace JsonFileExample.ViewModels
             settings.ServiceUrl = ServiceURL;
         }
 
+        void ReadFromResource()
+        {
+            var assembly = typeof(JsonFileExamplePage).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream(resourceName);
+
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                var json = reader.ReadToEnd();
+                settings = JsonConvert.DeserializeObject<Settings>(json);
+				version = settings.Version;
+				phonenumber = settings.PhoneNumber;
+				serviceurl = settings.ServiceUrl;
+				about = settings.About;
+            }
+        }
+
 		void ReadToFile()
 		{
             var file = DependencyService.Get<ISaveAndLoad>().LoadText(fileName);
-
-            if (file.Equals("")){
-                settings = new Settings
-                {
-                    Version = 0.0,
-                    PhoneNumber = 0,
-                    ServiceUrl = "",
-                    About = ""
-                };
-			}
-
             settings = JsonConvert.DeserializeObject<Settings>(file);
             version = settings.Version;
             phonenumber = settings.PhoneNumber;
             serviceurl = settings.ServiceUrl;
             about = settings.About;
-
         }
 
         void SaveToFile(){
             var json = JsonConvert.SerializeObject(settings);
-            DependencyService.Get<ISaveAndLoad>().SaveText(fileName,json);
+            DependencyService.Get<ISaveAndLoad>().SaveText(fileName, json);
         }
 
         public ExampleVM(){
 
             this.SaveCommand = new Command((obj) => 
             {  
-                
                 SaveToFile();
             });
 
-            //Init();
-
-            ReadToFile();
+            //ReadFromResource();
+            if(DependencyService.Get<ISaveAndLoad>().FindFile(fileName)){
+                ReadToFile();
+            }else{
+                Init();
+            }
         }
 
         void Init()

@@ -5,5 +5,6 @@ namespace JsonFileExample.Interfaces
     {
         void SaveText(string filename, string text);
         string LoadText(string filename);
+        bool FindFile(string filename);
     }
 }
